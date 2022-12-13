@@ -70,7 +70,7 @@ public class ProjectAkhir04 {
                     jumlahPesanan[i][0] = jumlahPorsi;
                     jumlahPesanan[i][1] = harga[3];
                     jumlahPesanan[i][2] = jumlahPorsi * harga[3];
-                    totalBayar += jumlahPesanan[i][3];
+                    totalBayar += jumlahPesanan[i][2];
                     break;
                 default:
                     System.out.println("inputan menu tidak valid");
@@ -92,8 +92,19 @@ public class ProjectAkhir04 {
 
         System.out.print("Masukkan tujuan pengiriman (dalam kota/luar kota): ");
         String inputPengiriman = input.nextLine();
-        hitungOngkir(inputPengiriman);
+        int tarifOngkir = hitungOngkir(inputPengiriman);
 
+        System.out.println("Tarif Ongkos Kirim : " + tarifOngkir);
+
+        totalBayar = hitungTotalBayar(totalBayar, tarifOngkir);
+
+        System.out.println("Total Bayar : "+totalBayar);
+
+    }
+
+    static int hitungTotalBayar(int total, int ongkos){
+        int grandTotal = total + ongkos;
+        return grandTotal ;
     }
 
     static int hitungOngkir(String jenisPengiriman) {
