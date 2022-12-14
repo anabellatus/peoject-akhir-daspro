@@ -5,6 +5,24 @@ public class ProjectAkhir04 {
     static Scanner input = new Scanner(System.in);
     static int tgl;
 
+    static String dataPelanggan[][] = {
+        // nama, tanggal pemesanan, tanggal kirim, pilihan kirim, nomor telepon, status bayar, jenis pembayaran, pesanan
+            { "Taehyung", "11", "12", "luar kota", "0812222", "lunas", "cash", "nasi kuning, nasi goreng" },
+            { "Namjoon", "11", "13", "dalam kota", "0812223", "lunas", "debit", "nasi goreng, tumis sawi, salad buah"},
+            { "Suga", "10", "11", "luar kota", "0812232", "dp", "cash", "salad buah"},
+            {"", "", "", "", "", "", ""},
+            {"", "", "", "", "", "", ""}
+    };
+
+    static int dataPesanan[][] = {
+        //jumlah pesanan, total pesanan, ongkir
+        {30, 150000, 60000},// nasi kuning 15, nasi goreng 15
+        {31, 276000, 30000},
+        {25, 125000, 60000} //nasi goreng 20, tumis sawi 3, salad buah 8
+    };
+
+
+
     static String menuMakanan[] = { "nasi kuning", "nasi goreng", "tumis sawi", "salad buah" };
 
     static int harga[] = { 8000, 10000, 12000, 5000 };
@@ -88,6 +106,8 @@ public class ProjectAkhir04 {
             System.out.println("\n-------------------------------------------------------------------------");
         }
 
+        System.out.println("Total Pesanan sebanyak : " + totalBayar);
+
         input.nextLine();
 
         System.out.print("Masukkan tujuan pengiriman (dalam kota/luar kota): ");
@@ -98,13 +118,13 @@ public class ProjectAkhir04 {
 
         totalBayar = hitungTotalBayar(totalBayar, tarifOngkir);
 
-        System.out.println("Total Bayar : "+totalBayar);
+        System.out.println("Total Bayar : " + totalBayar);
 
     }
 
-    static int hitungTotalBayar(int total, int ongkos){
+    static int hitungTotalBayar(int total, int ongkos) {
         int grandTotal = total + ongkos;
-        return grandTotal ;
+        return grandTotal;
     }
 
     static int hitungOngkir(String jenisPengiriman) {
@@ -114,7 +134,7 @@ public class ProjectAkhir04 {
             return ongkir = 30000;
         } else if (jenisPengiriman.equalsIgnoreCase("luar kota")) {
             return ongkir = 60000;
-        } else{
+        } else {
             System.out.println("jenis tujuan tidak ada");
             return ongkir = 0;
         }
