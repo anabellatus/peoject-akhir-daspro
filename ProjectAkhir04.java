@@ -6,22 +6,23 @@ public class ProjectAkhir04 {
     static int tgl;
 
     static String dataPelanggan[][] = {
-        // nama, tanggal pemesanan, tanggal kirim, pilihan kirim, nomor telepon, status bayar, jenis pembayaran, pesanan
+            // nama, tanggal pemesanan, tanggal kirim, pilihan kirim, nomor telepon, status
+            // bayar, jenis pembayaran, pesanan
             { "Taehyung", "11", "12", "luar kota", "0812222", "lunas", "cash", "nasi kuning, nasi goreng" },
-            { "Namjoon", "11", "13", "dalam kota", "0812223", "lunas", "debit", "nasi goreng, tumis sawi, salad buah"},
-            { "Suga", "10", "11", "luar kota", "0812232", "dp", "cash", "salad buah"},
-            {"", "", "", "", "", "", ""},
-            {"", "", "", "", "", "", ""}
+            { "Namjoon", "11", "13", "dalam kota", "0812223", "lunas", "debit", "nasi goreng, tumis sawi, salad buah" },
+            { "Suga", "10", "11", "luar kota", "0812232", "dp", "cash", "salad buah" },
+            { null, null, null, null, null, null, null, null },
+            { null, null, null, null, null, null, null, null }
     };
 
     static int dataPesanan[][] = {
-        //jumlah pesanan, total pesanan, ongkir
-        {30, 150000, 60000},// nasi kuning 15, nasi goreng 15
-        {31, 276000, 30000},
-        {25, 125000, 60000} //nasi goreng 20, tumis sawi 3, salad buah 8
+            // jumlah pesanan, total pesanan, ongkir, total bayar
+            { 30, 270000, 60000, 330000 }, // nasi kuning 15, nasi goreng 15
+            { 31, 276000, 30000, 336000 }, // nasi goreng 20, tumis sawi 3, salad buah 8
+            { 25, 125000, 60000, 185000 }, // salad buah 25
+            { 0, 0, 0 },
+            { 0, 0, 0 }
     };
-
-
 
     static String menuMakanan[] = { "nasi kuning", "nasi goreng", "tumis sawi", "salad buah" };
 
@@ -35,8 +36,9 @@ public class ProjectAkhir04 {
     static void transaksi() {
 
         String menuDipesan[];
+        // jumlah porsi, harga, total
         int jumlahPesanan[][];
-        int baris, kodeMenu, jumlahPorsi, totalBayar = 0;
+        int baris, kodeMenu, jumlahPorsi, totalBayar = 0, jumlahDp;
 
         System.out.print("Masukkan tanggal pesanan diantar : ");
         tgl = input.nextInt();
@@ -65,7 +67,7 @@ public class ProjectAkhir04 {
                     break;
                 case 2:
                     menuDipesan[i] = menuMakanan[1];
-                    System.out.printf("Ingin pesan menu %s berapa porsi? : ", menuMakanan[0]);
+                    System.out.printf("Ingin pesan menu %s berapa porsi? : ", menuMakanan[1]);
                     jumlahPorsi = input.nextInt();
                     jumlahPesanan[i][0] = jumlahPorsi;
                     jumlahPesanan[i][1] = harga[1];
@@ -74,7 +76,7 @@ public class ProjectAkhir04 {
                     break;
                 case 3:
                     menuDipesan[i] = menuMakanan[2];
-                    System.out.printf("Ingin pesan menu %s berapa porsi? : ", menuMakanan[0]);
+                    System.out.printf("Ingin pesan menu %s berapa porsi? : ", menuMakanan[2]);
                     jumlahPorsi = input.nextInt();
                     jumlahPesanan[i][0] = jumlahPorsi;
                     jumlahPesanan[i][1] = harga[2];
@@ -83,7 +85,7 @@ public class ProjectAkhir04 {
                     break;
                 case 4:
                     menuDipesan[i] = menuMakanan[3];
-                    System.out.printf("Ingin pesan menu %s berapa porsi? : ", menuMakanan[0]);
+                    System.out.printf("Ingin pesan menu %s berapa porsi? : ", menuMakanan[3]);
                     jumlahPorsi = input.nextInt();
                     jumlahPesanan[i][0] = jumlahPorsi;
                     jumlahPesanan[i][1] = harga[3];
@@ -94,6 +96,7 @@ public class ProjectAkhir04 {
                     System.out.println("inputan menu tidak valid");
                     i--;
             }
+
         }
 
         System.out.println("Berikut menu makanan yang anda pesan : ");
@@ -112,6 +115,7 @@ public class ProjectAkhir04 {
 
         System.out.print("Masukkan tujuan pengiriman (dalam kota/luar kota): ");
         String inputPengiriman = input.nextLine();
+
         int tarifOngkir = hitungOngkir(inputPengiriman);
 
         System.out.println("Tarif Ongkos Kirim : " + tarifOngkir);
@@ -120,6 +124,41 @@ public class ProjectAkhir04 {
 
         System.out.println("Total Bayar : " + totalBayar);
 
+        System.out.print("Inputkan nama pelanggan :");
+        dataPelanggan[4][0] = input.nextLine();
+
+        System.out.print("Inputkan Nomor Telepon Pelanggan : ");
+        dataPelanggan[4][4] = input.nextLine();
+
+        System.out.print("Pembayaran Lunas / Dp ? : ");
+        dataPelanggan[4][5] = input.nextLine();
+
+        if (dataPelanggan[4][5].equalsIgnoreCase("dp")) {
+            jumlahDp = totalBayar / 2;
+            System.out.print("Jumlah dp yang harus dibayarkan sebesar : " + jumlahDp);
+
+            hitungKembalian(jumlahDp);
+        } else if (dataPelanggan[4][5].equalsIgnoreCase("lunas")) {
+            hitungKembalian(totalBayar);
+        }
+
+    }
+
+    static int hitungKembalian(int totalBayar) {
+        int uang, kembalian = 0;
+        System.out.print("\nMembayar via apa? (cash/debit)? :");
+        dataPelanggan[4][6] = input.nextLine();
+
+        if (dataPelanggan[4][6].equalsIgnoreCase("cash")) {
+            System.out.print("Masukkan jumlah uang : ");
+            uang = input.nextInt();
+            kembalian = uang - totalBayar;
+            System.out.print("Kembalian : " + kembalian);
+        } else {
+            kembalian = 0;
+        }
+
+        return kembalian;
     }
 
     static int hitungTotalBayar(int total, int ongkos) {
