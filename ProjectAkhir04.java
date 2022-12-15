@@ -3,7 +3,6 @@ import java.util.Scanner;
 public class ProjectAkhir04 {
 
     static Scanner input = new Scanner(System.in);
-    static int tgl;
 
     static String dataPelanggan[][] = {
             // nama, tanggal pemesanan, tanggal kirim, pilihan kirim, nomor telepon, status
@@ -11,6 +10,7 @@ public class ProjectAkhir04 {
             { "Taehyung", "11", "12", "luar kota", "0812222", "lunas", "cash", "nasi kuning, nasi goreng" },
             { "Namjoon", "11", "13", "dalam kota", "0812223", "lunas", "debit", "nasi goreng, tumis sawi, salad buah" },
             { "Suga", "10", "11", "luar kota", "0812232", "dp", "cash", "salad buah" },
+            { null, null, null, null, null, null, null, null },
             { null, null, null, null, null, null, null, null },
             { null, null, null, null, null, null, null, null }
     };
@@ -20,15 +20,19 @@ public class ProjectAkhir04 {
             { 30, 270000, 60000, 330000 }, // nasi kuning 15, nasi goreng 15
             { 31, 276000, 30000, 336000 }, // nasi goreng 20, tumis sawi 3, salad buah 8
             { 25, 125000, 60000, 185000 }, // salad buah 25
-            { 0, 0, 0 },
-            { 0, 0, 0 }
+            { 0, 0, 0, 0 },
+            { 0, 0, 0, 0 },
+            { 0, 0, 0, 0 }
     };
 
     static String menuMakanan[] = { "nasi kuning", "nasi goreng", "tumis sawi", "salad buah" };
 
     static int harga[] = { 8000, 10000, 12000, 5000 };
 
+    static int uang;
+
     public static void main(String[] args) {
+
         transaksi();
 
     }
@@ -38,12 +42,16 @@ public class ProjectAkhir04 {
         String menuDipesan[];
         // jumlah porsi, harga, total
         int jumlahPesanan[][];
-        int baris, kodeMenu, jumlahPorsi, totalBayar = 0, jumlahDp;
+        int baris, kodeMenu, jumlahPorsi, totalBayar = 0, jumlahDp, subTotal = 0, totalPorsi = 0, kembali = 0;
+        String tglKirim;
 
         System.out.print("Masukkan tanggal pesanan diantar : ");
-        tgl = input.nextInt();
+        tglKirim = input.nextLine();
+        dataPelanggan[3][2] = tglKirim;
+        dataPelanggan[3][1] = "16";
 
         tampilMenuMakanan();
+
         System.out.print("Ingin memesan berapa menu? : ");
         baris = input.nextInt();
 
@@ -51,47 +59,66 @@ public class ProjectAkhir04 {
         jumlahPesanan = new int[baris][3];
 
         for (int i = 0; i < baris; i++) {
-
             System.out.print("Pilih Menu Makanan (1-4) : ");
             kodeMenu = input.nextInt();
 
             switch (kodeMenu) {
                 case 1:
                     menuDipesan[i] = menuMakanan[0];
+
                     System.out.printf("Ingin pesan menu %s berapa porsi? : ", menuMakanan[0]);
                     jumlahPorsi = input.nextInt();
+
                     jumlahPesanan[i][0] = jumlahPorsi;
                     jumlahPesanan[i][1] = harga[0];
                     jumlahPesanan[i][2] = jumlahPorsi * harga[0];
-                    totalBayar += jumlahPesanan[i][2];
+
+                    subTotal += jumlahPesanan[i][2];
+                    totalPorsi += jumlahPesanan[i][0];
                     break;
+
                 case 2:
                     menuDipesan[i] = menuMakanan[1];
+
                     System.out.printf("Ingin pesan menu %s berapa porsi? : ", menuMakanan[1]);
                     jumlahPorsi = input.nextInt();
+
                     jumlahPesanan[i][0] = jumlahPorsi;
                     jumlahPesanan[i][1] = harga[1];
                     jumlahPesanan[i][2] = jumlahPorsi * harga[1];
-                    totalBayar += jumlahPesanan[i][2];
+
+                    subTotal += jumlahPesanan[i][2];
+                    totalPorsi += jumlahPesanan[i][0];
                     break;
+
                 case 3:
                     menuDipesan[i] = menuMakanan[2];
+
                     System.out.printf("Ingin pesan menu %s berapa porsi? : ", menuMakanan[2]);
                     jumlahPorsi = input.nextInt();
+
                     jumlahPesanan[i][0] = jumlahPorsi;
                     jumlahPesanan[i][1] = harga[2];
                     jumlahPesanan[i][2] = jumlahPorsi * harga[2];
-                    totalBayar += jumlahPesanan[i][2];
+
+                    subTotal += jumlahPesanan[i][2];
+                    totalPorsi += jumlahPesanan[i][0];
                     break;
+
                 case 4:
                     menuDipesan[i] = menuMakanan[3];
+
                     System.out.printf("Ingin pesan menu %s berapa porsi? : ", menuMakanan[3]);
                     jumlahPorsi = input.nextInt();
+
                     jumlahPesanan[i][0] = jumlahPorsi;
                     jumlahPesanan[i][1] = harga[3];
                     jumlahPesanan[i][2] = jumlahPorsi * harga[3];
-                    totalBayar += jumlahPesanan[i][2];
+
+                    subTotal += jumlahPesanan[i][2];
+                    totalPorsi += jumlahPesanan[i][0];
                     break;
+
                 default:
                     System.out.println("inputan menu tidak valid");
                     i--;
@@ -109,49 +136,70 @@ public class ProjectAkhir04 {
             System.out.println("\n-------------------------------------------------------------------------");
         }
 
-        System.out.println("Total Pesanan sebanyak : " + totalBayar);
-
+        System.out.println("Total Pesanan sebanyak : " + subTotal);
         input.nextLine();
 
         System.out.print("Masukkan tujuan pengiriman (dalam kota/luar kota): ");
         String inputPengiriman = input.nextLine();
 
-        int tarifOngkir = hitungOngkir(inputPengiriman);
+        dataPelanggan[3][3] = inputPengiriman;
 
+        int tarifOngkir = hitungOngkir(inputPengiriman);
         System.out.println("Tarif Ongkos Kirim : " + tarifOngkir);
 
-        totalBayar = hitungTotalBayar(totalBayar, tarifOngkir);
+        dataPesanan[3][2] = tarifOngkir;
+
+        totalBayar = hitungTotalBayar(subTotal, tarifOngkir);
 
         System.out.println("Total Bayar : " + totalBayar);
 
-        System.out.print("Inputkan nama pelanggan :");
-        dataPelanggan[4][0] = input.nextLine();
+        System.out.print("Inputkan nama pelanggan : ");
+        dataPelanggan[3][0] = input.nextLine();
 
         System.out.print("Inputkan Nomor Telepon Pelanggan : ");
-        dataPelanggan[4][4] = input.nextLine();
+        dataPelanggan[3][4] = input.nextLine();
 
         System.out.print("Pembayaran Lunas / Dp ? : ");
-        dataPelanggan[4][5] = input.nextLine();
-
-        if (dataPelanggan[4][5].equalsIgnoreCase("dp")) {
+        dataPelanggan[3][5] = input.nextLine();
+        if (dataPelanggan[3][5].equalsIgnoreCase("dp")) {
             jumlahDp = totalBayar / 2;
             System.out.print("Jumlah dp yang harus dibayarkan sebesar : " + jumlahDp);
+            kembali = hitungKembalian(jumlahDp);
 
-            hitungKembalian(jumlahDp);
-        } else if (dataPelanggan[4][5].equalsIgnoreCase("lunas")) {
-            hitungKembalian(totalBayar);
+        } else if (dataPelanggan[3][5].equalsIgnoreCase("lunas")) {
+            kembali = hitungKembalian(totalBayar);
         }
+
+        dataPesanan[3][3] = totalBayar;
+        dataPesanan[3][0] = totalPorsi;
+        dataPesanan[3][1] = subTotal;
+
+        int increment = 0;
+        do {
+
+            if (dataPelanggan[3][7] == null) {
+                dataPelanggan[3][7] = menuDipesan[increment];
+            } else {
+                dataPelanggan[3][7] += ", " + menuDipesan[increment];
+            }
+
+            increment++;
+        } while (increment < menuDipesan.length);
+
+        tampilStruk(dataPelanggan[3][0], menuDipesan, jumlahPesanan, subTotal, uang, kembali);
 
     }
 
     static int hitungKembalian(int totalBayar) {
-        int uang, kembalian = 0;
-        System.out.print("\nMembayar via apa? (cash/debit)? :");
-        dataPelanggan[4][6] = input.nextLine();
+        int kembalian = 0;
+        System.out.print("\nMembayar via apa? (cash/debit)? : ");
+        dataPelanggan[3][6] = input.nextLine();
 
-        if (dataPelanggan[4][6].equalsIgnoreCase("cash")) {
+        if (dataPelanggan[3][6].equalsIgnoreCase("cash")) {
+
             System.out.print("Masukkan jumlah uang : ");
             uang = input.nextInt();
+
             kembalian = uang - totalBayar;
             System.out.print("Kembalian : " + kembalian);
         } else {
@@ -180,7 +228,6 @@ public class ProjectAkhir04 {
     }
 
     static void tampilMenuMakanan() {
-
         System.out.println("Menu : ");
         System.out.println("-----------------------------------------");
         for (int i = 0; i < menuMakanan.length; i++) {
@@ -188,5 +235,34 @@ public class ProjectAkhir04 {
             System.out.println("-----------------------------------------");
         }
 
+    }
+
+    static void tampilStruk(String nama, String pesanan[], int dataJumlah[][], int subTotal, int pembayaran,
+            int kembalian) {
+        System.out.println("\n=============================================");
+        System.out.println("               Vante Catering             ");
+        System.out.println("          Jalan Soekarno Hatta 401");
+        System.out.println("=============================================");
+        System.out.println("Tanggal Pemesanan : " + dataPelanggan[3][1]);
+        System.out.println("Nama Pelanggan    : " + nama);
+        System.out.println("=============================================");
+
+        for (int i = 0; i < pesanan.length; i++) {
+            System.out.printf("%s", pesanan[i]);
+            System.out.printf("\n%s x @%s \t\t\t%s", dataJumlah[i][0], dataJumlah[i][1],
+                    dataJumlah[i][2]);
+            System.out.println("");
+        }
+
+        System.out.println("\nDikirim ke : " + dataPelanggan[3][3]);
+
+        System.out.println("\n---------------------------------------------");
+        System.out.println("\t\tSub Total \t: " + subTotal);
+        System.out.println("\t\tOngkos Kirim \t: " + dataPesanan[3][2]);
+        System.out.println("\t\tGrand Total \t: " + dataPesanan[3][3]);
+        System.out.println("\t\tDibayar : \t: " + dataPesanan[3][5]);
+        System.out.println("\t\tPembayaran \t: " + dataPelanggan[3][6] + " " + pembayaran);
+        System.out.println("\t\tKembalian \t: " + kembalian);
+        System.out.println("=============================================");
     }
 }
