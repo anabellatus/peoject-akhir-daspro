@@ -191,6 +191,29 @@ public class ProjectAkhir04 {
         laporan();
         cekStatusPembayaran();
 
+        String hasil = searching();
+        System.out.println("Hasil : \n"+hasil);
+
+    }
+
+    static String searching() {
+        String key, hasil = "";
+
+        input.nextLine();
+
+        System.out.print("Masukkan Kata yang ingin dicari : ");
+        key = input.nextLine();
+
+        for (int i = 0; i < dataPelanggan.length; i++) {
+            for (int j = 0; j < dataPelanggan[0].length; j++) {
+                if (key == dataPelanggan[i][j]) {
+                    hasil = dataPelanggan[i][j];
+                    break;
+                }
+            }
+        }
+
+        return hasil;
     }
 
     static int hitungKembalian(int totalBayar) {
@@ -270,7 +293,7 @@ public class ProjectAkhir04 {
 
     }
 
-    static void cekStatusPembayaran(){
+    static void cekStatusPembayaran() {
         System.out.println("\n\n=============================================");
         System.out.println("             Cek Status Pembayaran           ");
         System.out.println("                Vante Catering               ");
@@ -296,7 +319,7 @@ public class ProjectAkhir04 {
             totalPemasukan += dataPesanan[i][3];
             System.out.println();
         }
-        System.out.println("Total Pemasukan : "+totalPemasukan);
+        System.out.println("Total Pemasukan : " + totalPemasukan);
         System.out.println("=============================================");
 
     }
