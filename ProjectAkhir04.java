@@ -7,7 +7,7 @@ public class ProjectAkhir04 {
     static String dataPelanggan[][] = {
             // nama, tanggal pemesanan, tanggal kirim, pilihan kirim, nomor telepon, status
             // bayar, jenis pembayaran, pesanan
-            { "Taehyung", "11", "12", "luar kota", "0812222", "lunas", "cash", "nasi kuning, nasi goreng" },
+            { "Jay", "11", "12", "luar kota", "0812222", "lunas", "cash", "nasi kuning, nasi goreng" },
             { "Namjoon", "11", "13", "dalam kota", "0812223", "lunas", "debit", "nasi goreng, tumis sawi, salad buah" },
             { "Suga", "10", "11", "luar kota", "0812232", "dp", "cash", "salad buah" },
             { null, null, null, null, null, null, null, null },
@@ -188,6 +188,9 @@ public class ProjectAkhir04 {
 
         tampilStruk(dataPelanggan[3][0], menuDipesan, jumlahPesanan, subTotal, uang, kembali);
 
+        laporan();
+        cekStatusPembayaran();
+
     }
 
     static int hitungKembalian(int totalBayar) {
@@ -239,7 +242,7 @@ public class ProjectAkhir04 {
 
     static void tampilStruk(String nama, String pesanan[], int dataJumlah[][], int subTotal, int pembayaran,
             int kembalian) {
-        System.out.println("\n=============================================");
+        System.out.println("\n\n\n=============================================");
         System.out.println("               Vante Catering             ");
         System.out.println("          Jalan Soekarno Hatta 401");
         System.out.println("=============================================");
@@ -260,9 +263,41 @@ public class ProjectAkhir04 {
         System.out.println("\t\tSub Total \t: " + subTotal);
         System.out.println("\t\tOngkos Kirim \t: " + dataPesanan[3][2]);
         System.out.println("\t\tGrand Total \t: " + dataPesanan[3][3]);
-        System.out.println("\t\tDibayar : \t: " + dataPesanan[3][5]);
+        System.out.println("\t\tDibayar \t: " + dataPelanggan[3][5]);
         System.out.println("\t\tPembayaran \t: " + dataPelanggan[3][6] + " " + pembayaran);
         System.out.println("\t\tKembalian \t: " + kembalian);
         System.out.println("=============================================");
+
+    }
+
+    static void cekStatusPembayaran(){
+        System.out.println("\n\n=============================================");
+        System.out.println("             Cek Status Pembayaran           ");
+        System.out.println("                Vante Catering               ");
+        System.out.println("---------------------------------------------");
+        System.out.println("Nama Pelanggan\tStatus Pembayaran\t");
+        for (int i = 0; i < dataPelanggan.length; i++) {
+            System.out.printf("%s\t \t%s\t", dataPelanggan[i][0], dataPelanggan[i][5]);
+            System.out.println();
+        }
+        System.out.println("=============================================");
+    }
+
+    static void laporan() {
+        int totalPemasukan = 0;
+        System.out.println("\n\n=============================================");
+        System.out.println("                Laporan Harian               ");
+        System.out.println("                Vante Catering               ");
+        System.out.println("---------------------------------------------");
+        System.out.println("Nama Pelanggan\tTotal Bayar\t");
+        for (int i = 0; i < dataPelanggan.length; i++) {
+            System.out.printf("%s\t", dataPelanggan[i][0]);
+            System.out.printf("\t%s\t", dataPesanan[i][3]);
+            totalPemasukan += dataPesanan[i][3];
+            System.out.println();
+        }
+        System.out.println("Total Pemasukan : "+totalPemasukan);
+        System.out.println("=============================================");
+
     }
 }
