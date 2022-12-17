@@ -8,7 +8,7 @@ public class ProjectAkhir04 {
             // nama, tanggal pemesanan, tanggal kirim, pilihan kirim, nomor telepon, status
             // bayar, jenis pembayaran, pesanan
             { "Jay", "11", "12", "luar kota", "0812222", "lunas", "cash", "nasi kuning, nasi goreng" },
-            { "Namjoon", "11", "13", "dalam kota", "0812223", "lunas", "debit", "nasi goreng, tumis sawi, salad buah" },
+            { "Namjoon", "11", "13", "dalam kota", "0812223", "lunas", "cash", "nasi goreng, tumis sawi, salad buah" },
             { "Suga", "10", "11", "luar kota", "0812232", "dp", "cash", "salad buah" },
             { null, null, null, null, null, null, null, null },
             { null, null, null, null, null, null, null, null },
@@ -33,7 +33,18 @@ public class ProjectAkhir04 {
 
     public static void main(String[] args) {
 
-        transaksi();
+        // transaksi();
+        int hasil[] = searching();
+
+        // System.out.println("|\tNama Pelanggan\t|\tTgl Psn\t|\tTgl Krm\t|\tPilKrm\t|\tNo.telp\t|\tStatus\t|\tPilKrm\t|\tBayar\t|\tPesanan\t|");
+        // System.out.println("--------------------------------------------------------------------------------------------------------------");
+        for (int i = 0; i < hasil.length; i++) {
+            // System.out.println(hasil[i]);
+            for (int j = 0; j < dataPelanggan[0].length; j++) {
+                System.out.printf("|\t%s\t", dataPelanggan[i][j]);
+            }
+            System.out.println("--------------------------------------------------------------------------------------------------------------");
+        }
 
     }
 
@@ -191,13 +202,24 @@ public class ProjectAkhir04 {
         laporan();
         cekStatusPembayaran();
 
-        String hasil = searching();
-        System.out.println("Hasil : \n"+hasil);
+        int hasil[] = searching();
+
+        // System.out.println("|\tNama Pelanggan\t|\tTgl Psn\t|\tTgl Krm\t|\tPilKrm\t|\tNo.telp\t|\tStatus\t|\tPilKrm\t|\tBayar\t|\tPesanan\t|");
+        // System.out.println("--------------------------------------------------------------------------------------------------------------");
+        for (int i = 0; i < hasil.length; i++) {
+            System.out.println(hasil[i]);
+            // for (int j = 0; j < dataPelanggan[0].length; j++) {
+            //     System.out.printf("|\t%s\t", dataPelanggan[i][j]);
+            // }
+            // System.out.println("--------------------------------------------------------------------------------------------------------------");
+        }
 
     }
 
-    static String searching() {
-        String key, hasil = "";
+    static int[] searching() {
+        String key;
+        int hasil[] = new int[6];
+        int counter = 0;
 
         input.nextLine();
 
@@ -206,9 +228,9 @@ public class ProjectAkhir04 {
 
         for (int i = 0; i < dataPelanggan.length; i++) {
             for (int j = 0; j < dataPelanggan[0].length; j++) {
-                if (key == dataPelanggan[i][j]) {
-                    hasil = dataPelanggan[i][j];
-                    break;
+                if (key.equalsIgnoreCase(dataPelanggan[i][j])) {
+                    hasil[counter] = i;
+                    counter++;
                 }
             }
         }
