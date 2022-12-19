@@ -33,18 +33,7 @@ public class ProjectAkhir04 {
 
     public static void main(String[] args) {
 
-        // transaksi();
-        int hasil[] = searching();
-
-        // System.out.println("|\tNama Pelanggan\t|\tTgl Psn\t|\tTgl Krm\t|\tPilKrm\t|\tNo.telp\t|\tStatus\t|\tPilKrm\t|\tBayar\t|\tPesanan\t|");
-        // System.out.println("--------------------------------------------------------------------------------------------------------------");
-        for (int i = 0; i < hasil.length; i++) {
-            // System.out.println(hasil[i]);
-            for (int j = 0; j < dataPelanggan[0].length; j++) {
-                System.out.printf("|\t%s\t", dataPelanggan[i][j]);
-            }
-            System.out.println("--------------------------------------------------------------------------------------------------------------");
-        }
+        transaksi();
 
     }
 
@@ -204,15 +193,30 @@ public class ProjectAkhir04 {
 
         int hasil[] = searching();
 
-        // System.out.println("|\tNama Pelanggan\t|\tTgl Psn\t|\tTgl Krm\t|\tPilKrm\t|\tNo.telp\t|\tStatus\t|\tPilKrm\t|\tBayar\t|\tPesanan\t|");
-        // System.out.println("--------------------------------------------------------------------------------------------------------------");
-        for (int i = 0; i < hasil.length; i++) {
-            System.out.println(hasil[i]);
-            // for (int j = 0; j < dataPelanggan[0].length; j++) {
-            //     System.out.printf("|\t%s\t", dataPelanggan[i][j]);
-            // }
-            // System.out.println("--------------------------------------------------------------------------------------------------------------");
+        System.out
+                .println("|  Nama\t|  Tgl Psn\t|  Tgl Krm\t|  Tujuan\t|  No. telp\t|  Status\t|  Bayar\t|  Pesanan\t|");
+        System.out.println(
+                "--------------------------------------------------------------------------------------------------------------");
+        int l = 0;
+        do{
+        for (int j = 0; j < dataPelanggan[0].length; j++) {
+        System.out.printf("| %s\t", dataPelanggan[hasil[l]][j]);
         }
+        System.out.println("\n--------------------------------------------------------------------------------------------------------------");
+        l++;
+
+        }while(hasil[l] != 0);
+
+        // for (int i = 0; i < hasil.length; i++) {
+        //     // System.out.println(hasil[i]);
+        //     for (int j = 0; j < dataPelanggan[0].length; j++) {
+        //         if (hasil[i] != 0) {
+        //             System.out.printf("|\t%s\t", dataPelanggan[hasil[i] - 1][j]);
+        //         }
+        //     }
+        //     System.out.println(
+        //             "--------------------------------------------------------------------------------------------------------------");
+        // }
 
     }
 
@@ -229,7 +233,7 @@ public class ProjectAkhir04 {
         for (int i = 0; i < dataPelanggan.length; i++) {
             for (int j = 0; j < dataPelanggan[0].length; j++) {
                 if (key.equalsIgnoreCase(dataPelanggan[i][j])) {
-                    hasil[counter] = i;
+                    hasil[counter] = i + 1;
                     counter++;
                 }
             }
@@ -345,4 +349,5 @@ public class ProjectAkhir04 {
         System.out.println("=============================================");
 
     }
+
 }
